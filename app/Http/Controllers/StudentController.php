@@ -10,7 +10,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('students.index', compact('students'));
+        return view('dashboard', compact('students'));
     }
 
     public function store(Request $request)
@@ -21,8 +21,13 @@ class StudentController extends Controller
             'phone' => 'required',
             'address' => 'required',
         ]);
-
         Student::create($request->all());
-        return redirect()->route('students.index')->with('success', 'Student added successfully');
+        return redirect()->route('dashboard')->with('success', 'Student added successfully');
     }
+
+public function destroy(Student $student) {
+    
+    $student->delete();
+    return redirect()->route('dashboard')->with('success', 'Student added successfully');
+}
 }
